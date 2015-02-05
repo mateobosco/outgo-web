@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="outgoesApp">
+	<head>
+		<title>OutgoesApp</title>
+		<meta charset="utf-8">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+	</head>
+	<body ng-controller="OutgoesAppController as app">
+		<div class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">OutgoesApp</a>
+				</div>
+				<div class="nav navbar-nav navbar-right">
+					<li><a href="/preguntar" data-toggle="modal" data-target="#newOutgo">New Outgo</a></li>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="outgo in app.outgoes">
+							<p>{{outgo.description}} <em class="pull-right">{{outgo.cost | currency}}</em></p>
+						</li>
+					</ul>
+				</div>
+
+
+
+
+
+
+
+				<div class="modal fade" id="newOutgo" tabindex="-1" role="dialog" aria-labelledby="newOutgo" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="newOutgo">New Outgo</h4>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="outgo-cost" class="control-label">Cost:</label>
+										<input type="text" class="form-control" id="outgo-cost">
+									</div>
+									<div class="form-group">
+										<label for="outgo-description" class="control-label">Description:</label>
+										<textarea class="form-control" id="outgo-description"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="outgo-tags" class="control-label">Tags</label>
+										<input type="text" class="form-control" id="outgo-tags" value="Amsterdam,Washington" data-role="tagsinput">
+									</div>
+									<div class="form-group">
+										<label for="outgo-date" class="control-label">DateTime</label>
+										<div class="input-group date form_datetime"  data-date-format="dd MM yyyy - HH:ii p" data-link-field="outgo-date">
+											<input class="form-control" size="16" type="text" value="" readonly>
+											<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+										</div>
+										<input type="hidden" id="outgo-date" value="" /><br/>
+									</div>
+
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Create</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="col-md-6">COLUMNA 2</div>
+			</div>
+
+
+
+
+		</div>
+
+		<script type="text/javascript" src="outgoesApp.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+		<script type="text/javascript">
+		$('.form_datetime').datetimepicker({
+			weekStart: 1,
+			todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			forceParse: 0,
+			showMeridian: 1
+		});
+		</script>
+	</body>
+</html>
