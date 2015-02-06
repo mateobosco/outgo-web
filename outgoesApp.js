@@ -100,10 +100,22 @@
 
   });
 
-
-
-
 })();
+
+$('#updateOutgo').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('uotgotomodif') // Extract info from data-* attributes
+  alert(recipient)
+  var outgo
+  $.get(recipient).success(function(data,status){
+  	outgo = data;
+  	alert("Data: " + data + "\nStatus: " + status);
+  });
+  var modal = $(this)
+  modal.find('.modal-body input').val(recipient)
+})
+
+
 
 $.getScript('http://timschlechter.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',function(){ 
 });

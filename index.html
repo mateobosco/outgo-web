@@ -22,7 +22,7 @@
 					<a class="navbar-brand" href="#">OutgoesApp</a>
 				</div>
 				<div class="nav navbar-nav navbar-right">
-					<li><a href="/preguntar" data-toggle="modal" data-target="#newOutgo">New Outgo</a></li>
+					<li><a href="/#" data-toggle="modal" data-target="#newOutgo">New Outgo</a></li>
 				</div>
 			</div>
 		</div>
@@ -30,10 +30,13 @@
 			<div class="row">
 				<div class="col-md-6" ng-controller="LeftController as left">
 					<ul class="list-group">
-						<a href="#" class="list-group-item" ng-repeat="outgo in left.outgoes | reverse">
-							<p>{{outgo.description}}  <em class="pull-right"><span class="badge">{{outgo.cost | currency}}</span></em></p>
-							<span ng-repeat="label in outgo.tags"><span class="label label-info">{{label}}</span> </span>
-						</a>
+						<span ng-repeat="outgo in left.outgoes | reverse">
+							<a href="/#" data-toggle="modal" data-target="#updateOutgo" data-uotgotomodif="{{outgo.uri}}" class="list-group-item">
+								<p>{{outgo.description}}  <em class="pull-right"><span class="badge">{{outgo.cost | currency}}</span></em></p>
+								<span ng-repeat="label in outgo.tags"><span class="label label-info">{{label}}</span> </span>
+								<em class="pull-right">{{outgo.date}}</em>
+							</a>
+						</span>
 
 					</ul>
 				</div>
@@ -85,6 +88,8 @@
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 
 
@@ -92,8 +97,32 @@
 
 				<div class="col-md-6" ng-controller="RightController as right">
 					COLUMNA 2
-					<canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend></canvas>
+					<!-- <canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend></canvas> -->
 				</div>
+
+				<div class="modal fade" id="updateOutgo" tabindex="-1" role="dialog" aria-labelledby="updateOutgo" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="updateOutgo">New Outgo</h4>
+							</div>
+							<div class="modal-body">
+								<form>
+									<label for="outgo-cost" class="control-label">Cost: </label>
+									<div class="input-group">
+										<span class="input-group-addon">$</span>
+										<input type="text" class="form-control" id="outgo-cost-modif" aria-label="Amount (to the nearest dollar)">
+										<span class="input-group-addon">.00</span>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Update</button>
+							</div>
+						</div>
+					</div>
 			</div>
 
 
