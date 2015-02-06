@@ -11,9 +11,11 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+	    <script src="bower_components/Chart.js/Chart.min.js"></script>
+		<script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.min.js"></script>
 
 	</head>
-	<body ng-controller="OutgoesAppController as app">
+	<body >
 		<div class="navbar navbar-default">
 			<div class="container">
 				<div class="navbar-header">
@@ -26,11 +28,13 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6" ng-controller="LeftController as left">
 					<ul class="list-group">
-						<li class="list-group-item" ng-repeat="outgo in app.outgoes">
-							<p>{{outgo.description}} <em class="pull-right">{{outgo.cost | currency}}</em></p>
-						</li>
+						<a href="#" class="list-group-item" ng-repeat="outgo in left.outgoes | reverse">
+							<p>{{outgo.description}}  <em class="pull-right"><span class="badge">{{outgo.cost | currency}}</span></em></p>
+							<span ng-repeat="label in outgo.tags"><span class="label label-info">{{label}}</span> </span>
+						</a>
+
 					</ul>
 				</div>
 
@@ -49,20 +53,23 @@
 							</div>
 							<div class="modal-body">
 								<form>
-									<div class="form-group">
-										<label for="outgo-cost" class="control-label">Cost:</label>
-										<input type="text" class="form-control" id="outgo-cost">
+									<label for="outgo-cost" class="control-label">Cost: </label>
+									<div class="input-group">
+										<span class="input-group-addon">$</span>
+										<input type="text" class="form-control" id="outgo-cost" aria-label="Amount (to the nearest dollar)">
+										<span class="input-group-addon">.00</span>
 									</div>
+									<br>
 									<div class="form-group">
 										<label for="outgo-description" class="control-label">Description:</label>
 										<textarea class="form-control" id="outgo-description"></textarea>
 									</div>
 									<div class="form-group">
-										<label for="outgo-tags" class="control-label">Tags</label>
+										<label for="outgo-tags" class="control-label">Tags: </label>
 										<input type="text" class="form-control" id="outgo-tags" value="Amsterdam,Washington" data-role="tagsinput">
 									</div>
 									<div class="form-group">
-										<label for="outgo-date" class="control-label">DateTime</label>
+										<label for="outgo-date" class="control-label">DateTime: </label>
 										<div class="input-group date form_datetime"  data-date-format="dd MM yyyy - HH:ii p" data-link-field="outgo-date">
 											<input class="form-control" size="16" type="text" value="" readonly>
 											<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -83,7 +90,10 @@
 
 
 
-				<div class="col-md-6">COLUMNA 2</div>
+				<div class="col-md-6" ng-controller="RightController as right">
+					COLUMNA 2
+					<canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend></canvas>
+				</div>
 			</div>
 
 
