@@ -31,7 +31,7 @@
 				<div class="col-md-6" ng-controller="LeftController as left">
 					<ul class="list-group">
 						<span ng-repeat="outgo in left.outgoes | reverse">
-							<a href="/#" data-toggle="modal" data-target="#updateOutgo" data-uotgotomodif="{{outgo.uri}}" class="list-group-item">
+							<a href="/#" data-toggle="modal" ng-click="selectOutgo(outgo.uri)" data-target="#updateOutgo" data-uotgotomodif="{{outgo.uri}}" class="list-group-item">
 								<p>{{outgo.description}}  <em class="pull-right"><span class="badge">{{outgo.cost | currency}}</span></em></p>
 								<span ng-repeat="label in outgo.tags"><span class="label label-info">{{label}}</span> </span>
 								<em class="pull-right">{{outgo.date}}</em>
@@ -97,10 +97,10 @@
 
 				<div class="col-md-6" ng-controller="RightController as right">
 					COLUMNA 2
-					<!-- <canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend></canvas> -->
+					<canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend></canvas>
 				</div>
 
-				<div class="modal fade" id="updateOutgo" tabindex="-1" role="dialog" aria-labelledby="updateOutgo" aria-hidden="true">
+				<div class="modal fade" id="updateOutgo"  tabindex="-1" role="dialog" aria-labelledby="updateOutgo" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">

@@ -2,13 +2,18 @@
 
 	var app = angular.module('outgoesApp', ['tc.chartjs']);
 
-	app.controller('LeftController', ['$http', function ($http) {
+	app.controller('LeftController', ['$http', function ($http,selectedOutgoService) {
 		var app = this;
 		app.outgoes = [];
 
 		$http.get('http://outgoes.herokuapp.com/api/v1.0/outgo/get_outgoes').success(function(data){
 			app.outgoes = data.outgoes;
 		});
+
+    this.selectOutgo = function(uri){
+      alert(uri);
+      selectedOutgoService.selectedOutgo = uri;
+    }
 	}]);
 
 	app.filter('reverse', function() {
@@ -16,6 +21,11 @@
 			return items.slice().reverse();
 		}; 
 	});
+
+  app.service('selectedOutgoService', function(){
+    var selectedOutgo =0;
+  });
+
 
 	app.controller( 'RightController', function( $scope ) {
 
@@ -102,7 +112,7 @@
 
 })();
 
-$('#updateOutgo').on('show.bs.modal', function (event) {
+/*$('#updateOutgo').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
   var recipient = button.data('uotgotomodif') // Extract info from data-* attributes
   alert(recipient)
@@ -112,9 +122,9 @@ $('#updateOutgo').on('show.bs.modal', function (event) {
   	alert("Data: " + data + "\nStatus: " + status);
   });
   var modal = $(this)
-  modal.find('.modal-body input').val(recipient)
+  modal.find('.modal-body input').val("outgo.uri")
 })
-
+*/
 
 
 $.getScript('http://timschlechter.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',function(){ 
