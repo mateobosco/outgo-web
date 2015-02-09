@@ -2,18 +2,22 @@
 
 	var app = angular.module('outgoesApp', ['tc.chartjs']);
 
-	app.controller('LeftController', ['$http', function ($http,selectedOutgoService) {
-		var app = this;
-		app.outgoes = [];
+	app.controller('LeftController', ['$http', function LeftController($http,SelectedOutgo) {
+		var leftCtrl = this;
+		leftCtrl.outgoes = [];
 
 		$http.get('http://outgoes.herokuapp.com/api/v1.0/outgo/get_outgoes').success(function(data){
-			app.outgoes = data.outgoes;
+      console.log("llamada a "+'http://outgoes.herokuapp.com/api/v1.0/outgo/get_outgoes');
+			leftCtrl.outgoes = data.outgoes;
 		});
 
-    this.selectOutgo = function(uri){
-      alert(uri);
-      selectedOutgoService.selectedOutgo = uri;
-    }
+    this.selectOutgo = function(uri,SelectedOutgo){
+      $http.get(uri).success(function(data,SelectedOutgo){
+        SelectedOutgo.setSelectedOutgo(data.outgo);
+        console.log("llamada a "+uri);
+        console.log(data.outgo);
+      });
+    };
 	}]);
 
 	app.filter('reverse', function() {
@@ -22,12 +26,41 @@
 		}; 
 	});
 
-  app.service('selectedOutgoService', function(){
-    var selectedOutgo =0;
+  app.controller("UpdateOutgoController", function UpdateOutgoController($scope,SelectedOutgo){
+    var updateOutgoController = this;
+    updateOutgoController.outgo = 0;
+
+    $scope.$watch(function () { return SelectedOutgo.getSelectedOutgo(); }, function (newValue) {
+      if (newValue) {
+        $scope.SelectedOutgo = newValue;
+        updateOutgoController.outgo = newValue;
+        consele.log("modifica el valor del outgo a updatear");
+      }
+    });
+
+    updateOutgoController.SelectedOutgo = SelectedOutgo;
+    console.log("creo el update outgo controller")
+  })
+
+  app.factory('SelectedOutgo', function(){
+    var data =
+        {
+            SelectedOutgo: ''
+        };
+    
+    return {
+        getSelectedOutgo: function () {
+            return data.SelectedOutgo;
+        },
+        setSelectedOutgo: function (outgo) {
+            data.SelectedOutgo = outgo;
+        }
+    };
   });
 
 
-	app.controller( 'RightController', function( $scope ) {
+
+	app.controller( 'RightController', function RightController( $scope ) {
 
     // Chart.js Data
     $scope.data = {
